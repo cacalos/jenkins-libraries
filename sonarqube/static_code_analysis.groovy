@@ -8,7 +8,6 @@ def call(){
   // sonarqube api token
   cred_id = config.credential_id ?:
             "sonarqube"
-
   enforce = config.enforce_quality_gate ?:
             true
 
@@ -33,8 +32,8 @@ withSonarQubeEnv('sonar.installation') { // from SonarQube servers > name
           sh "mkdir -p empty"
 		  */
 		  env.REPO_NAME = env.REPO_NAME ?: "sonarQube"
-          projectKey = "$env.REPO_NAME:$env.BRANCH_NAME".replaceAll("/", "_")
-          projectName = "$env.REPO_NAME - $env.BRANCH_NAME"
+          projectKey = "$env.JOB_NAME:$env.BRANCH_NAME".replaceAll("/", "_")
+          projectName = "$env.JOB_NAME - $env.BRANCH_NAME"
           def script = """${sonarHome}/bin/sonar-scanner -X -Dsonar.login=${user} -Dsonar.password=${token} -Dsonar.projectKey="$projectKey" -Dsonar.projectName="$projectName" -Dsonar.projectBaseDir=. """
            
 		  /*
