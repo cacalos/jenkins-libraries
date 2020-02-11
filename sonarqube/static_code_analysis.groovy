@@ -25,15 +25,16 @@ withSonarQubeEnv('sonar.installation') { // from SonarQube servers > name
   stage("SonarQube Analysis"){
 	node {
       withCredentials([usernamePassword(credentialsId: cred_id, passwordVariable: 'token', usernameVariable: 'user')]) {
+        env.sonarHome= tool name: 'SonarScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
 		echo "AAAAA   ${token}"
-        withSonarQubeEnv("SonarScanner"){
+        withSonarQubeEnv("sonar.installation"){
 		  echo "BBBB ${user},   ${token}"
           unstash "workspace"
           try{ unstash "test-results" }catch(ex){}
           sh "mkdir -p empty"
           projectKey = "$env.REPO_NAME:$env.BRANCH_NAME".replaceAll("/", "_")
           projectName = "$env.REPO_NAME - $env.BRANCH_NAME"
-          def script = """sonar-scanner -X -Dsonar.login=${user} -Dsonar.password=${token} -Dsonar.projectKey="$projectKey" -Dsonar.projectName="$projectName" -Dsonar.projectBaseDir=. """
+          def script = """${sonarHome}/bin/sonar-scanner -X -Dsonar.login=${user} -Dsonar.password=${token} -Dsonar.projectKey="$projectKey" -Dsonar.projectName="$projectName" -Dsonar.projectBaseDir=. """
            
           if (!fileExists("sonar-project.properties"))
             script += "-Dsonar.sources=\"./src\""
