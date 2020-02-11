@@ -13,9 +13,10 @@ def call(){
             true
 
   stage("SonarQube Analysis"){
-      withCredentials([usernamePassword(credentialsId: cred_id, passwordVariable: 'aaa', usernameVariable: 'user')]) {
-      echo "${user},   ${aaa}"
+      withCredentials([usernamePassword(credentialsId: cred_id, passwordVariable: 'token', usernameVariable: 'user')]) {
+		echo "AAAAA   ${token}"
         withSonarQubeEnv("SonarQube"){
+		  echo "BBBB ${user},   ${token}"
           unstash "workspace"
           try{ unstash "test-results" }catch(ex){}
           sh "mkdir -p empty"
