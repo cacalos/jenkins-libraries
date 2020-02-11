@@ -12,10 +12,20 @@ def call(){
   enforce = config.enforce_quality_gate ?:
             true
 
+
+/*
+env.sonarHome= tool name: 'scanner-2.4', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+
+withSonarQubeEnv('sonar.installation') { // from SonarQube servers > name
+  sh "${sonarHome}/bin/sonar-runner -Dsonar.host.url=${SONAR_HOST_URL}  -Dsonar.login=${SONAR_AUTH_TOKEN}    -Dsonar.projectName=xxx -Dsonar.projectVersion=xxx -Dsonar.projectKey=xxx -Dsonar.sources=."
+
+}
+*/
+
   stage("SonarQube Analysis"){
       withCredentials([usernamePassword(credentialsId: cred_id, passwordVariable: 'token', usernameVariable: 'user')]) {
 		echo "AAAAA   ${token}"
-        withSonarQubeEnv("SonarQube"){
+        withSonarQubeEnv("SonarScanner"){
 		  echo "BBBB ${user},   ${token}"
           unstash "workspace"
           try{ unstash "test-results" }catch(ex){}
