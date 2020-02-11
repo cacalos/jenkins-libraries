@@ -13,6 +13,7 @@ def call(){
 
   stage("SonarQube Analysis"){
 	node {
+	  echo "cred_id ${cred_id}"
       withCredentials([usernamePassword(credentialsId: cred_id, passwordVariable: 'token', usernameVariable: 'user')]) {
         env.sonarHome= tool name: 'scanner-2.4', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
         withSonarQubeEnv("SonarQube"){
