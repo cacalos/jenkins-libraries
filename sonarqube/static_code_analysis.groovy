@@ -13,7 +13,6 @@ def call(){
             true
 
   stage("SonarQube Analysis"){
-    inside_sdp_image "sonar-scanner", {
       withCredentials([usernamePassword(credentialsId: cred_id, passwordVariable: 'token', usernameVariable: 'user')]) {
         withSonarQubeEnv("SonarQube"){
           unstash "workspace"
@@ -37,5 +36,4 @@ def call(){
         }
       }
     }
-  }
 }
