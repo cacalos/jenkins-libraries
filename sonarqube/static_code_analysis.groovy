@@ -25,7 +25,7 @@ withSonarQubeEnv('sonar.installation') { // from SonarQube servers > name
   stage("SonarQube Analysis"){
 	node {
       withCredentials([usernamePassword(credentialsId: cred_id, passwordVariable: 'token', usernameVariable: 'user')]) {
-        env.sonarHome= tool name: 'SonarScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+        env.sonarHome= tool name: 'scanner-2.4', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
 		echo "AAAAA   ${token}"
         withSonarQubeEnv("sonar.installation"){
 		  echo "BBBB ${user},   ${token}"
