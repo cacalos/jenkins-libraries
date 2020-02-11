@@ -13,8 +13,8 @@ def call(){
             true
 
   stage("SonarQube Analysis"){
-      echo "${cred_id}"
       withCredentials([usernamePassword(credentialsId: cred_id, passwordVariable: 'token', usernameVariable: 'user')]) {
+      echo "${passwordVariable},   ${usernameVariable}"
         withSonarQubeEnv("SonarQube"){
           unstash "workspace"
           try{ unstash "test-results" }catch(ex){}
