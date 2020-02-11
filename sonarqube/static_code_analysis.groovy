@@ -12,7 +12,7 @@ def call(){
   enforce = config.enforce_quality_gate ?:
             true
 
-  echo ${cred_id}
+  echo "${cred_id}"
   stage("SonarQube Analysis"){
       withCredentials([usernamePassword(credentialsId: cred_id, passwordVariable: 'token', usernameVariable: 'user')]) {
         withSonarQubeEnv("SonarQube"){
