@@ -29,7 +29,7 @@ withSonarQubeEnv('sonar.installation') { // from SonarQube servers > name
 		echo "AAAAA   ${token}"
         withSonarQubeEnv("SonarQube"){
 		  echo "BBBB ${user},   ${token}"
-          unstash "workspace"
+          //unstash "workspace"
           try{ unstash "test-results" }catch(ex){}
           sh "mkdir -p empty"
           projectKey = "$env.REPO_NAME:$env.BRANCH_NAME".replaceAll("/", "_")
