@@ -23,6 +23,7 @@ withSonarQubeEnv('sonar.installation') { // from SonarQube servers > name
 */
 
   stage("SonarQube Analysis"){
+	node {
       withCredentials([usernamePassword(credentialsId: cred_id, passwordVariable: 'token', usernameVariable: 'user')]) {
 		echo "AAAAA   ${token}"
         withSonarQubeEnv("SonarScanner"){
@@ -48,4 +49,5 @@ withSonarQubeEnv('sonar.installation') { // from SonarQube servers > name
         }
       }
     }
+  }
 }
