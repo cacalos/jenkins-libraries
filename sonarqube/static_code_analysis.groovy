@@ -27,9 +27,12 @@ withSonarQubeEnv('sonar.installation') { // from SonarQube servers > name
       withCredentials([usernamePassword(credentialsId: cred_id, passwordVariable: 'token', usernameVariable: 'user')]) {
         env.sonarHome= tool name: 'scanner-2.4', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
         withSonarQubeEnv("SonarQube"){
+		  /*
           //unstash "workspace"
           try{ unstash "test-results" }catch(ex){}
           sh "mkdir -p empty"
+		  */
+		  env.REPO_NAME = env.REPO_NAME ?: "sonarQube"
           projectKey = "$env.REPO_NAME:$env.BRANCH_NAME".replaceAll("/", "_")
           projectName = "$env.REPO_NAME - $env.BRANCH_NAME"
           def script = """${sonarHome}/bin/sonar-scanner -X -Dsonar.login=${user} -Dsonar.password=${token} -Dsonar.projectKey="$projectKey" -Dsonar.projectName="$projectName" -Dsonar.projectBaseDir=. """
