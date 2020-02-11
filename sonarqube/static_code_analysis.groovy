@@ -45,10 +45,13 @@ withSonarQubeEnv('sonar.installation') { // from SonarQube servers > name
             
         }
         timeout(time: 1, unit: 'HOURS') {
-          def qg = waitForQualityGate()
-          if (qg.status != 'OK' && enforce) {
-            error "Pipeline aborted due to quality gate failure: ${qg.status}"
-          }
+		  script {
+		    sleep 10
+            def qg = waitForQualityGate()
+            if (qg.status != 'OK' && enforce) {
+              error "Pipeline aborted due to quality gate failure: ${qg.status}"
+            }
+		  }
         }
       }
     }
