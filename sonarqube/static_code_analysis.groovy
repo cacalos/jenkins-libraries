@@ -26,9 +26,7 @@ withSonarQubeEnv('sonar.installation') { // from SonarQube servers > name
 	node {
       withCredentials([usernamePassword(credentialsId: cred_id, passwordVariable: 'token', usernameVariable: 'user')]) {
         env.sonarHome= tool name: 'scanner-2.4', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
-		echo "AAAAA   ${token}"
         withSonarQubeEnv("SonarQube"){
-		  echo "BBBB ${user},   ${token}"
           //unstash "workspace"
           try{ unstash "test-results" }catch(ex){}
           sh "mkdir -p empty"
@@ -40,6 +38,7 @@ withSonarQubeEnv('sonar.installation') { // from SonarQube servers > name
           if (!fileExists("sonar-project.properties"))
             script += "-Dsonar.sources=\"./src\""
 		  */
+		  echo "script ${script}"
 
           sh script
             
