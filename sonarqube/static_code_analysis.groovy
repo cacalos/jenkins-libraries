@@ -11,29 +11,13 @@ def call(){
   enforce = config.enforce_quality_gate ?:
             true
 
-
-/*
-env.sonarHome= tool name: 'scanner-2.4', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
-
-withSonarQubeEnv('sonar.installation') { // from SonarQube servers > name
-  sh "${sonarHome}/bin/sonar-runner -Dsonar.host.url=${SONAR_HOST_URL}  -Dsonar.login=${SONAR_AUTH_TOKEN}    -Dsonar.projectName=xxx -Dsonar.projectVersion=xxx -Dsonar.projectKey=xxx -Dsonar.sources=."
-
-}
-*/
-
   stage("SonarQube Analysis"){
 	node {
       withCredentials([usernamePassword(credentialsId: cred_id, passwordVariable: 'token', usernameVariable: 'user')]) {
         env.sonarHome= tool name: 'scanner-2.4', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
         withSonarQubeEnv("SonarQube"){
-		  /*
-          //unstash "workspace"
-          try{ unstash "test-results" }catch(ex){}
-          sh "mkdir -p empty"
-		  */
-		  env.REPO_NAME = env.REPO_NAME ?: "sonarQube"
-          projectKey = "$env.JOB_NAME:$env.BRANCH_NAME".replaceAll("/", "_")
-          projectName = "$env.JOB_NAME - $env.BRANCH_NAME"
+          projectKey = "$env.JOB_NAME".replaceAll("/", ":")
+          projectName = "$env.JOB_NAME".replaceAll("/", "-")
           def script = """${sonarHome}/bin/sonar-scanner -X -Dsonar.login=${user} -Dsonar.password=${token} -Dsonar.projectKey="$projectKey" -Dsonar.projectName="$projectName" -Dsonar.projectBaseDir=. """
            
 		  /*
