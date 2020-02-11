@@ -20,7 +20,7 @@ def call(){
 		  echo "env  ${env}"
           projectKey = "$env.JOB_NAME".replaceAll("/", ":")
           projectName = "$env.JOB_NAME".replaceAll("/", "-")
-          def script = """${sonarHome}/bin/sonar-scanner -X -Dsonar.login=${user} -Dsonar.password=${token} -Dsonar.projectKey="$projectKey" -Dsonar.projectName="$projectName" -Dsonar.projectBaseDir=.  -Dsonar.core.serverBaseURL=http://cicd.uangel.com:9000 """
+          def script = """${sonarHome}/bin/sonar-scanner -X -Dsonar.login=${user} -Dsonar.password=${token} -Dsonar.projectKey="$projectKey" -Dsonar.projectName="$projectName" -Dsonar.projectBaseDir=.  -Dsonar.serverBaseURL=http://cicd.uangel.com:9000 """
            
 		  /*
           if (!fileExists("sonar-project.properties"))
