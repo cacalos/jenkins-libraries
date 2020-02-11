@@ -23,10 +23,11 @@ def call(){
           def script = """${sonarHome}/bin/sonar-scanner -X -Dsonar.login=${user} -Dsonar.password=${token} -Dsonar.projectKey="$projectKey" -Dsonar.projectName="$projectName" -Dsonar.projectBaseDir=. """
           //def script = """${sonarHome}/bin/sonar-scanner -X -Dsonar.login=${user} -Dsonar.password=${token} -Dsonar.projectKey="$projectKey" -Dsonar.projectName="$projectName" -Dsonar.projectBaseDir=. -Dsonar.analysis.testInfo="$env.JENKINS_URL" """
            
-		  /*
           if (!fileExists("sonar-project.properties"))
+	        echo "file not found  sonar-project.properties"
             script += "-Dsonar.sources=\"./src\""
-		  */
+
+
 		  echo "script ${script}"
 
           sh script
