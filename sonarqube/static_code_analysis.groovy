@@ -36,8 +36,10 @@ withSonarQubeEnv('sonar.installation') { // from SonarQube servers > name
           projectName = "$env.REPO_NAME - $env.BRANCH_NAME"
           def script = """${sonarHome}/bin/sonar-scanner -X -Dsonar.login=${user} -Dsonar.password=${token} -Dsonar.projectKey="$projectKey" -Dsonar.projectName="$projectName" -Dsonar.projectBaseDir=. """
            
+		  /*
           if (!fileExists("sonar-project.properties"))
             script += "-Dsonar.sources=\"./src\""
+		  */
 
           sh script
             
